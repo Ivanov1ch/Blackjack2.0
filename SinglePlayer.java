@@ -6,8 +6,6 @@
 */
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 public class SinglePlayer {
@@ -24,13 +22,10 @@ public class SinglePlayer {
             System.exit(10); //10 = Bad money
         }
 
-        boolean playing = true;
-
-        while (playing) {
+        while (true) {
             if (money < 1.00) {
                 JOptionPane.showMessageDialog(null, "You don't have enough money to keep playing!", "Uh oh!", JOptionPane.ERROR_MESSAGE);
-                playing = false;
-                System.exit(10); //10 = Bad money
+                break;
             }
             Dealer.resetDeck(Dealer.deck);
             Dealer.initDeck(Dealer.deck);
@@ -55,15 +50,8 @@ public class SinglePlayer {
 
             JOptionPane.showMessageDialog(null, "Dealing cards...", "", JOptionPane.PLAIN_MESSAGE);
 
-            //Wait
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException ie) {
-
-            }
-
-            JOptionPane.showMessageDialog(null, "You have recieved a " + playerHand.hand.get(0).suit.symbol + playerHand.hand.get(0).name + " and a " + playerHand.hand.get(1).suit.symbol + playerHand.hand.get(1).name + ".\n" +
-                    "The dealer has recieved a + Dealer.hand.hand.get(0).suit.symbol + Dealer.hand.hand.get(0).name +  and an unknown card.", "", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(0).suit.symbol + playerHand.hand.get(0).name + " and a " + playerHand.hand.get(1).suit.symbol + playerHand.hand.get(1).name + ".\n" +
+                    "The dealer has received a " + Dealer.hand.hand.get(0).suit.symbol + Dealer.hand.hand.get(0).name + " and an unknown card.", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
 
             if (Dealer.hand.hand.get(0).name.equals("Ace")) {
                 while (true) {
@@ -86,18 +74,18 @@ public class SinglePlayer {
             boolean firstPlay = true;
 
             while (playStillGoing) {
-                String choice = GameManager.getChoice();
+                int choice = GameManager.getChoice();
 
-                if (choice.equals("H")) {
+                if (choice == 0) {
                     Dealer.dealCard(playerHand.hand);
-                    System.out.println("You have recieved a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".");
-                } else if (choice.equals("D")) {
+                    JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
+                } else if (choice == 1) {
                     Dealer.dealCard(playerHand.hand);
                     wager *= 2;
-                    System.out.println("Upping your bid to $" + wager);
-                    System.out.println("You have recieved a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name  + ".");
+                    JOptionPane.showMessageDialog(null, "Upping your bid to $" + wager, "Wager updated!", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
                     playStillGoing = false;
-                } else if (choice.equals("S")) {
+                } else if (choice == 2) {
                     playStillGoing = false;
                     break;
                 } else {
@@ -107,12 +95,12 @@ public class SinglePlayer {
                         firstPlay = false;
                         break;
                     } else {
-                        System.out.println("Sorry, but you can only Surrender on your first hand!");
+                        JOptionPane.showMessageDialog(null, "Sorry, but you can only Surrender on your first hand!", "Error!", JOptionPane.ERROR_MESSAGE);
                         continue;
                     }
                 }
 
-                System.out.println("Your current hand is: " + Hand.printFullHand(playerHand) + ".");
+                JOptionPane.showMessageDialog(null, "Your current hand is: " + Hand.printFullHand(playerHand) + ".", "Hand info", JOptionPane.PLAIN_MESSAGE);
 
                 firstPlay = false;
 
@@ -132,7 +120,7 @@ public class SinglePlayer {
 
             getWinner(playerHand, Dealer.hand, blackjack, bust);
 
-            System.out.println("\nYou have $" + money + " left.");
+            JOptionPane.showMessageDialog(null, "You have $" + money + " left.", "Money updated", JOptionPane.PLAIN_MESSAGE);
 
             /*****RESET******/
             Hand.clearHand(playerHand);
@@ -141,95 +129,91 @@ public class SinglePlayer {
             wager = 0;
 
             if (money < 1) {
-                System.out.println("You don't have enough money to keep playing!");
-                playing = false;
+                JOptionPane.showMessageDialog(null, "You don't have enough money to keep playing!", "Error!", JOptionPane.ERROR_MESSAGE);
                 break;
             }
 
-            while (true) {
-                int answer = JOptionPane.showConfirmDialog(null, "Would you like to play again?", "Play again?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer == JOptionPane.YES_OPTION) {
-                    playing = true;
-                    break;
-                } else {
-                    playing = false;
-                    break;
-                }
+            int answer = JOptionPane.showConfirmDialog(null, "Would you like to play again?", "Play again?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (answer == JOptionPane.YES_OPTION) {
+                //Do nothing
+            } else {
+                break;
             }
         }
     }
 
+
     public static void getWinner(Hand playerHand, Hand dealerHand, boolean playerBlackjack, boolean playerBust) {
         if (playerBust) {
             //The player goes first, so it checks if the player busted first.
-            System.out.println("You busted! You lose your wager of $" + wager + ".");
+            JOptionPane.showMessageDialog(null, "You busted! You lose your wager of $" + wager + ".", "", JOptionPane.PLAIN_MESSAGE);
             money -= wager;
             if (!GameManager.checkForBlackjack(dealerHand)) {
                 if (insuranceWager != 0.0) {
                     //They took insurance
-                    System.out.println("The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!");
+                    JOptionPane.showMessageDialog(null, "The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money -= insuranceWager;
                 }
             } else {
                 if (insuranceWager != 0.0) {
                     //They took insurance
                     insuranceWager *= 2;
-                    System.out.println("However, you win back 2:1 ($" + insuranceWager + ") from your insurance!");
+                    JOptionPane.showMessageDialog(null, "However, you win back 2:1 ($" + insuranceWager + ") from your insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money += insuranceWager;
                 }
             }
         } else if (GameManager.checkForBust(dealerHand)) {
-            System.out.println("The dealer busted! You win your wager of $" + wager + ".");
+            JOptionPane.showMessageDialog(null, "The dealer busted! You win your wager of $" + wager + ".", "", JOptionPane.PLAIN_MESSAGE);
             money += wager;
             if (insuranceWager != 0.0) {
                 //They took insurance
-                System.out.println("The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!");
+                JOptionPane.showMessageDialog(null, "The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!", "", JOptionPane.PLAIN_MESSAGE);
                 money -= insuranceWager;
             }
         } else {
             //Neither busted
             if (playerBlackjack && GameManager.checkForBlackjack(dealerHand)) {
                 //2 blackjacks == tie
-                System.out.println("It's a push! You don't lose or gain anything!");
+                JOptionPane.showMessageDialog(null, "It's a push! You don't lose or gain anything!", "", JOptionPane.PLAIN_MESSAGE);
                 if (insuranceWager != 0.0) {
                     //They took insurance
                     insuranceWager *= 2;
-                    System.out.println("However, you win back 2:1 ($" + insuranceWager + ") from your insurance!");
+                    JOptionPane.showMessageDialog(null, "However, you win back 2:1 ($" + insuranceWager + ") from your insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money += insuranceWager;
                 }
             } else if (playerBlackjack) {
                 wager *= 1.5;
-                System.out.println("You got a blackjack! You win 3:2 on your wager, or $" + wager + ".");
+                JOptionPane.showMessageDialog(null, "You got a blackjack! You win 3:2 on your wager, or $" + wager + ".", "", JOptionPane.PLAIN_MESSAGE);
                 money += wager;
                 if (insuranceWager != 0.0) {
                     //They took insurance
-                    System.out.println("The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!");
+                    JOptionPane.showMessageDialog(null, "The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money -= insuranceWager;
                 }
             } else if (GameManager.checkForBlackjack(dealerHand)) {
-                System.out.println("The dealer got a blackjack! You lose your $" + wager + " wager.");
+                JOptionPane.showMessageDialog(null, "The dealer got a blackjack! You lose your $" + wager + " wager.", "", JOptionPane.PLAIN_MESSAGE);
                 money -= wager;
                 if (insuranceWager != 0.0) {
                     //They took insurance
                     insuranceWager *= 2;
-                    System.out.println("However, you win back 2:1 ($" + insuranceWager + ") from your insurance!");
+                    JOptionPane.showMessageDialog(null, "However, you win back 2:1 ($" + insuranceWager + ") from your insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money += insuranceWager;
                 }
             } else {
                 //No busts, no blackjacks
                 if (insuranceWager != 0.0) {
                     //They took insurance
-                    System.out.println("The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!");
+                    JOptionPane.showMessageDialog(null, "The dealer didn't have a blackjack! You lose your $" + insuranceWager + " insurance!", "", JOptionPane.PLAIN_MESSAGE);
                     money -= insuranceWager;
                 }
 
                 if (Hand.getPoints(playerHand) == Hand.getPoints(dealerHand)) {
-                    System.out.println("It's a push! You don't lose or gain anything!");
+                    JOptionPane.showMessageDialog(null, "It's a push! You don't lose or gain anything!", "", JOptionPane.PLAIN_MESSAGE);
                 } else if (Hand.getPoints(playerHand) > Hand.getPoints(dealerHand)) {
-                    System.out.println("You win! You get $" + wager + ".");
+                    JOptionPane.showMessageDialog(null, "You win! You get $" + wager + ".", "", JOptionPane.PLAIN_MESSAGE);
                     money += wager;
                 } else {
-                    System.out.println("You lose! You lose $" + wager + ".");
+                    JOptionPane.showMessageDialog(null, "You lose! You lose $" + wager + ".", "", JOptionPane.PLAIN_MESSAGE);
                     money -= wager;
                 }
             }

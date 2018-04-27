@@ -6,7 +6,6 @@
 */
 
 import javax.swing.*;
-import java.util.Scanner;
 
 public class GameManager {
 
@@ -14,7 +13,7 @@ public class GameManager {
         double money = 0;
 
         while (!false) {
-            money = Double.parseDouble((String)JOptionPane.showInputDialog(null, "How much money do you have? You must have at least 1 dollar to play.", "Player info", JOptionPane.PLAIN_MESSAGE, null, null, null));
+            money = Double.parseDouble((String) JOptionPane.showInputDialog(null, "How much money do you have? You must have at least 1 dollar to play.", "Player info", JOptionPane.PLAIN_MESSAGE, null, null, null));
 
             String text = Double.toString(Math.abs(money));
             int integerPlaces = text.indexOf('.');
@@ -34,7 +33,7 @@ public class GameManager {
         String name;
 
         while (!false) {
-            name = (String)JOptionPane.showInputDialog(null, "Welcome to the table, what is your name?", "Player Info", JOptionPane.PLAIN_MESSAGE, null, null, "");
+            name = (String) JOptionPane.showInputDialog(null, "Welcome to the table, what is your name?", "Player Info", JOptionPane.PLAIN_MESSAGE, null, null, "");
 
             if (name.length() >= 3) {
                 break;
@@ -49,7 +48,7 @@ public class GameManager {
     public static double getWager(double minWager, double maxWager) {
         double wager;
         while (!false) {
-            wager = Double.parseDouble((String)JOptionPane.showInputDialog(null, "What would you like to wager on this hand?", "Wager", JOptionPane.PLAIN_MESSAGE, null, null, null));
+            wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What would you like to wager on this hand?", "Wager", JOptionPane.PLAIN_MESSAGE, null, null, null));
 
             String text = Double.toString(Math.abs(wager));
             int integerPlaces = text.indexOf('.');
@@ -68,12 +67,11 @@ public class GameManager {
 
     public static double getInsuranceWager(double minWager, double maxWager) {
         double wager;
-        int answer = -9999;
-            answer = JOptionPane.showConfirmDialog(null, "Would you like to take insurance?", "Insurance", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int answer = JOptionPane.showConfirmDialog(null, "Would you like to take insurance?", "Insurance", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         while (true) {
             if (answer == JOptionPane.YES_OPTION) {
-                wager = Double.parseDouble((String)JOptionPane.showInputDialog(null, "What is your insurance wager?", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
+                wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What is your insurance wager?", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
 
                 String text = Double.toString(Math.abs(wager));
                 int integerPlaces = text.indexOf('.');
@@ -84,8 +82,7 @@ public class GameManager {
                 }
 
                 JOptionPane.showMessageDialog(null, "Sorry, but $" + wager + " is not a valid wager.\nPlease either match or raise $" + minWager + ", and wager less than $" + maxWager + ".", "Error!", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
+            } else {
                 return 0.0;
             }
         }
@@ -94,42 +91,26 @@ public class GameManager {
 
     }
 
-    public static String getChoice() {
-        String choice;
-        while (true) {
-            choice = (String)JOptionPane.showInputDialog(null, "(H)it, (S)tand, (D)ouble, or (Su)rrender", "What do you want to do?", JOptionPane.QUESTION_MESSAGE);
+    public static int getChoice() {
+        int choice;
 
-            String partOne = Character.toString(choice.charAt(0)).toUpperCase();
-            choice = partOne + choice.substring(1);
-
-            boolean accepted = false;
-
-            String[] acceptedAnswers = {"H", "S", "D", "Su"};
-            for (int i = 0; i < acceptedAnswers.length; i++) {
-                if (choice.equals(acceptedAnswers[i])) {
-                    accepted = true;
-                    break;
-                }
-            }
-
-            if (accepted)
-                break;
-
-           JOptionPane.showMessageDialog(null, "Sorry, but '" + choice + "' is not an accepted input.", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+        String[] options = new String[]{"Hit", "Double", "Stand", "Surrender"};
+        choice = JOptionPane.showOptionDialog(null, "What would you like to do?", "Your turn!",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, options, null);
 
         return choice;
     }
 
     public static boolean softNumber(Hand givenHand, int targetNumber) {
         boolean hasAce = false;
-        for(int i=0; i < givenHand.hand.size(); i++) {
-            if(givenHand.hand.get(i).name.equals("Ace")){
+        for (int i = 0; i < givenHand.hand.size(); i++) {
+            if (givenHand.hand.get(i).name.equals("Ace")) {
                 hasAce = true;
                 break;
             }
         }
-        if(hasAce) {
+        if (hasAce) {
             int handPoints = Hand.getPoints(givenHand);              //Forces the Hand class to correctly assign acePoints
             if (Hand.acePoints == 11) {
                 //It's a soft hand
@@ -143,8 +124,7 @@ public class GameManager {
                 //The ace is being valued as a 1 (It's a hard hand)
                 return false;
             }
-        }
-        else{
+        } else {
             //No ace
             return false;
         }

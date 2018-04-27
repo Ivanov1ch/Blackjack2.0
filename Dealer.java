@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.Stack;
 import java.util.List;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class Dealer {
 
@@ -34,7 +33,7 @@ public class Dealer {
 
     public static void initDeck(Stack<Card> gameDeck) {
         final int NUM_SUITS = 4;
-        final int STARTING_CARD_NUMBER = 14;
+        final int STARTING_CARD_NUMBER = 2;
         final int CARDS_PER_SUIT = 14;
         final int DECKS_USED = 6;
 
@@ -75,13 +74,6 @@ public class Dealer {
     public static void revealHand() {
         JOptionPane.showMessageDialog(null, "Your turn is now over. Flipping over the card in the hole...", "", JOptionPane.PLAIN_MESSAGE);
 
-        //Wait
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ie) {
-
-        }
-
         JOptionPane.showMessageDialog(null, "The dealer's 2 cards are: " + Hand.printFullHand(Dealer.hand) + ".", "", JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -98,23 +90,13 @@ public class Dealer {
             } else if (Hand.getPoints(myHand) < 16) {
                 JOptionPane.showMessageDialog(null, "The dealer has less than 16 points, and is hitting...", "", JOptionPane.PLAIN_MESSAGE);
                 dealCard(myHand.hand);
-                //Wait
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException ie) {
 
-                }
                 JOptionPane.showMessageDialog(null, "The dealer drew a " + myHand.hand.get(myHand.hand.size() - 1).suit.symbol + myHand.hand.get(myHand.hand.size() - 1).name, "", JOptionPane.PLAIN_MESSAGE);
             } else if (GameManager.softNumber(myHand, 17)) {
                 //It's a soft 17
                 JOptionPane.showMessageDialog(null, "It's a soft 17. The dealer is hitting...", "", JOptionPane.PLAIN_MESSAGE);
                 dealCard(myHand.hand);
-                //Wait
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException ie) {
 
-                }
                 JOptionPane.showMessageDialog(null, "The dealer drew a " + myHand.hand.get(myHand.hand.size() - 1).suit.symbol + myHand.hand.get(myHand.hand.size() - 1).name, "", JOptionPane.PLAIN_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "The dealer is standing.", "", JOptionPane.PLAIN_MESSAGE);
@@ -124,14 +106,6 @@ public class Dealer {
         }
 
         JOptionPane.showMessageDialog(null, "The dealer's final cards are: " + Hand.printFullHand(Dealer.hand) + ".", "", JOptionPane.PLAIN_MESSAGE);
-
-
-        //Wait
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ie) {
-
-        }
     }
 
 }
