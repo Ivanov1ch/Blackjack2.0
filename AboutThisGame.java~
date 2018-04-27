@@ -1,0 +1,13 @@
+/*
+// File:             AboutThisGame.java
+// Created:          [yyyy/mm/dd creation date]
+// Author:           [author]
+// Description:      Describe function here.
+*/
+
+
+public class AboutThisGame {
+  public static void main (String[] args){
+  
+  }
+}

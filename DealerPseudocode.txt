@@ -1,0 +1,8 @@
+Wait until it's your turn
+Flip your second card
+Calculate your points
+
+if less than or equal to 16 points
+	hit
+if soft 17
+	hit
