@@ -49,7 +49,11 @@ public class MainMenu {
 
     public static void runFromChoice(String choice, Object[] playOptions) {
         if (choice.equals(playOptions[0]))
-            SinglePlayer.runGame();
+            try {
+                SinglePlayer.runGame();
+            }catch(IOException exception){
+                exception.printStackTrace();
+            }
         else if (choice.equals(playOptions[1]))
             HowToPlay.main(null);
         else if (choice.equals(playOptions[2]))

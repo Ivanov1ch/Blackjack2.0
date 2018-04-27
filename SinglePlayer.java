@@ -7,19 +7,43 @@
 
 import java.util.ArrayList;
 import javax.swing.*;
+import java.util.Scanner;
+import java.io.*;
 
 public class SinglePlayer {
     public static double money;
     public static double wager;
     public static double insuranceWager;
 
-    public static void runGame() {
+    public static void runGame() throws IOException{
         String name = GameManager.getName();
 
         money = GameManager.getMoney();
+        double startingMoney = money;
 
-        if (money == -1) {
-            System.exit(10); //10 = Bad money
+        double maxMoneymade = Double.MIN_VALUE;
+
+        File topEarnerFile = new File("top earner.txt");
+
+        PrintWriter topEarnerWriter = new PrintWriter(topEarnerFile);
+
+        Scanner topEarnerReader = new Scanner(System.in); //Default to terminal, so we don't get errors when trying to close
+
+        String topEarnerName = "";
+        double topEarned = Double.MIN_VALUE;
+
+        if(topEarnerFile.exists()){
+             topEarnerReader = new Scanner(topEarnerFile);
+
+             if(topEarnerReader.hasNext()) {
+
+                 topEarnerName = topEarnerReader.nextLine();
+                 topEarned = topEarnerReader.nextDouble();
+
+                 JOptionPane.showMessageDialog(null, "Welcome, " + name + ".\n" +
+                         "The top earner so far is " + topEarnerName + ".\n" +
+                         "They earned $" + topEarned);
+             }
         }
 
         while (true) {
@@ -122,6 +146,10 @@ public class SinglePlayer {
 
             JOptionPane.showMessageDialog(null, "You have $" + money + " left.", "Money updated", JOptionPane.PLAIN_MESSAGE);
 
+            if(money - startingMoney > maxMoneymade){
+                maxMoneymade = money - startingMoney;
+            }
+
             /*****RESET******/
             Hand.clearHand(playerHand);
             Hand.clearHand(Dealer.hand);
@@ -140,6 +168,17 @@ public class SinglePlayer {
                 break;
             }
         }
+
+        if(maxMoneymade > topEarned && maxMoneymade > 0){
+            JOptionPane.showMessageDialog(null, "Congratulations " + name + "!\n" +
+                    "You are the Java Arcade's top earner! You earned $" + maxMoneymade + ", beating the old record of $" +topEarned + "!", "New Record!", JOptionPane.PLAIN_MESSAGE);
+
+            topEarnerWriter.println(name);
+            topEarnerWriter.print(maxMoneymade);
+        }
+
+        topEarnerReader.close();
+        topEarnerWriter.close();
     }
 
 
