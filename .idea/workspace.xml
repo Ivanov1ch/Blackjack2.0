@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8cf18f9-6a27-4a43-b895-1c2cbd955052" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SinglePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SinglePlayer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,13 +17,18 @@
       <file leaf-file-name="SinglePlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SinglePlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+            <state relative-caret-position="527">
+              <caret line="42" column="57" selection-start-line="42" selection-start-column="57" selection-end-line="42" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="top earner.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/top earner.txt">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="MainMenu.java" pinned="false" current-in-tab="false">
@@ -95,6 +99,7 @@
         <option value="$PROJECT_DIR$/GameManager.java" />
         <option value="$PROJECT_DIR$/Hand.java" />
         <option value="$PROJECT_DIR$/MainMenu.java" />
+        <option value="$PROJECT_DIR$/top earner.txt" />
         <option value="$PROJECT_DIR$/SinglePlayer.java" />
       </list>
     </option>
@@ -245,9 +250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top earner.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/MainMenu.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="474">
@@ -276,10 +278,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/top earner.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/SinglePlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+        <state relative-caret-position="527">
+          <caret line="42" column="57" selection-start-line="42" selection-start-column="57" selection-end-line="42" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

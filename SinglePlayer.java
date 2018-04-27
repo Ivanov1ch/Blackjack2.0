@@ -25,12 +25,10 @@ public class SinglePlayer {
 
         File topEarnerFile = new File("top earner.txt");
 
-        PrintWriter topEarnerWriter = new PrintWriter(topEarnerFile);
-
         Scanner topEarnerReader = new Scanner(System.in); //Default to terminal, so we don't get errors when trying to close
 
-        String topEarnerName = "";
-        double topEarned = Double.MIN_VALUE;
+        String topEarnerName;
+        double topEarned = 0.0;
 
         if(topEarnerFile.exists()){
              topEarnerReader = new Scanner(topEarnerFile);
@@ -42,9 +40,11 @@ public class SinglePlayer {
 
                  JOptionPane.showMessageDialog(null, "Welcome, " + name + ".\n" +
                          "The top earner so far is " + topEarnerName + ".\n" +
-                         "They earned $" + topEarned);
+                         "They earned $" + topEarned + ".");
              }
         }
+
+        PrintWriter topEarnerWriter = new PrintWriter(topEarnerFile);
 
         while (true) {
             if (money < 1.00) {
