@@ -21,7 +21,7 @@ public class SinglePlayer {
         money = GameManager.getMoney();
         double startingMoney = money;
 
-        double maxMoneymade = Double.MIN_VALUE;
+        double maxMoneymade = 0.0;
 
         File topEarnerFile = new File("top earner.txt");
 
@@ -169,7 +169,7 @@ public class SinglePlayer {
             }
         }
 
-        if(maxMoneymade > topEarned && maxMoneymade > 0){
+        if(maxMoneymade > topEarned && maxMoneymade > 0.0){
             JOptionPane.showMessageDialog(null, "Congratulations " + name + "!\n" +
                     "You are the Java Arcade's top earner! You earned $" + maxMoneymade + ", beating the old record of $" +topEarned + "!", "New Record!", JOptionPane.PLAIN_MESSAGE);
 
