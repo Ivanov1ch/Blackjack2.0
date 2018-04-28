@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8cf18f9-6a27-4a43-b895-1c2cbd955052" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/SinglePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SinglePlayer.java" afterDir="false" />
-    </list>
+    <list default="true" id="d8cf18f9-6a27-4a43-b895-1c2cbd955052" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -216,7 +214,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3290938" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21041445" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21041445" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="4" />
