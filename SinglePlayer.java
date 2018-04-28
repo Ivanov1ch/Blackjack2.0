@@ -104,11 +104,17 @@ public class SinglePlayer {
                     Dealer.dealCard(playerHand.hand);
                     JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
                 } else if (choice == 1) {
-                    Dealer.dealCard(playerHand.hand);
-                    wager *= 2;
-                    JOptionPane.showMessageDialog(null, "Upping your bid to $" + wager, "Wager updated!", JOptionPane.PLAIN_MESSAGE);
-                    JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
-                    playStillGoing = false;
+                    if(wager * 2 <= money) {
+                        Dealer.dealCard(playerHand.hand);
+                        wager *= 2;
+                        JOptionPane.showMessageDialog(null, "Upping your bid to $" + wager, "Wager updated!", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
+                        playStillGoing = false;
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "You cannot double, as you don't have $" + wager * 2 + " to wager!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        continue;
+                    }
                 } else if (choice == 2) {
                     playStillGoing = false;
                     break;

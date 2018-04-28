@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public class HowToPlay {
     public static void main(String[] args) {
+        Object[] next = {"Next"};
         JOptionPane.showMessageDialog(null, "The object of blackjack is to beat the dealer.\n" +
                         "To beat the dealer the player must:\n" +
                         "1. Not bust (go over 21 points in one hand). Then, if they do not bust, they must:\n" +
