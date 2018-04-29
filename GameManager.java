@@ -65,13 +65,13 @@ public class GameManager {
 
     }
 
-    public static double getInsuranceWager(double minWager, double maxWager) {
+    public static double getInsuranceWager(double minWager, double maxWager, double money) {
         double wager;
         int answer = JOptionPane.showConfirmDialog(null, "Would you like to take insurance?", "Insurance", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         while (true) {
             if (answer == JOptionPane.YES_OPTION) {
-                wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What is your insurance wager?", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
+                wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What is your insurance wager?\nYou have $" + money + " left.", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
 
                 String text = Double.toString(Math.abs(wager));
                 int integerPlaces = text.indexOf('.');

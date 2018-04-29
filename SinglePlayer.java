@@ -79,7 +79,7 @@ public class SinglePlayer {
 
             if (Dealer.hand.hand.get(0).name.equals("Ace")) {
                 while (true) {
-                    insuranceWager = GameManager.getInsuranceWager(1.00, wager / 2.0);
+                    insuranceWager = GameManager.getInsuranceWager(1.00, wager / 2.0, money);
                     if (insuranceWager + wager <= money) {
                         break;
                     }
