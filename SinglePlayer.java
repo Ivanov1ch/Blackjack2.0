@@ -11,40 +11,36 @@ import java.util.Scanner;
 import java.io.*;
 
 public class SinglePlayer {
-    public static double money;
-    public static double wager;
-    public static double insuranceWager;
+    static double money;
+    static double wager;
+    static double insuranceWager;
 
-    public static void runGame() throws IOException{
+    static void runGame() throws IOException {
         String name = GameManager.getName();
 
         money = GameManager.getMoney();
         double startingMoney = money;
 
-        double maxMoneymade = 0.0;
-
         File topEarnerFile = new File("top earner.txt");
 
-        Scanner topEarnerReader = new Scanner(System.in); //Default to terminal, so we don't get errors when trying to close
-
         String topEarnerName;
-        double topEarned = 0.0;
+        double topEarned = 1.0;
 
-        if(topEarnerFile.exists()){
-             topEarnerReader = new Scanner(topEarnerFile);
+        if (topEarnerFile.exists()) {
+            Scanner topEarnerReader = new Scanner(topEarnerFile);
 
-             if(topEarnerReader.hasNext()) {
+            if (topEarnerReader.hasNext()) {
 
-                 topEarnerName = topEarnerReader.nextLine();
-                 topEarned = topEarnerReader.nextDouble();
+                topEarnerName = topEarnerReader.nextLine();
+                topEarned = topEarnerReader.nextDouble();
 
-                 JOptionPane.showMessageDialog(null, "Welcome, " + name + ".\n" +
-                         "The top earner so far is " + topEarnerName + ".\n" +
-                         "They earned $" + topEarned + ".");
-             }
+                JOptionPane.showMessageDialog(null, "Welcome, " + name + ".\n" +
+                        "The top earner so far is " + topEarnerName + ".\n" +
+                        "They earned $" + topEarned + ".");
+            }
+
+            topEarnerReader.close();
         }
-
-        PrintWriter topEarnerWriter = new PrintWriter(topEarnerFile);
 
         while (true) {
             if (money < 1.00) {
@@ -79,11 +75,15 @@ public class SinglePlayer {
 
             if (Dealer.hand.hand.get(0).name.equals("Ace")) {
                 while (true) {
-                    insuranceWager = GameManager.getInsuranceWager(1.00, wager / 2.0, money);
-                    if (insuranceWager + wager <= money) {
+                    if(money - wager >= 1 && wager >=   2) {
+                        insuranceWager = GameManager.getInsuranceWager(1.00, wager / 2.0, money - wager);
+                        if (insuranceWager + wager <= money) {
+                            break;
+                        }
+                    }
+                    else{
                         break;
                     }
-
                     JOptionPane.showMessageDialog(null, "you're entering more money than you have to bet! Please wager a value less than or equal to " + (money - wager) + ".", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -104,14 +104,13 @@ public class SinglePlayer {
                     Dealer.dealCard(playerHand.hand);
                     JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
                 } else if (choice == 1) {
-                    if(wager * 2 <= money) {
+                    if (wager * 2 <= money) {
                         Dealer.dealCard(playerHand.hand);
                         wager *= 2;
                         JOptionPane.showMessageDialog(null, "Upping your bid to $" + wager, "Wager updated!", JOptionPane.PLAIN_MESSAGE);
                         JOptionPane.showMessageDialog(null, "You have received a " + playerHand.hand.get(playerHand.hand.size() - 1).suit.symbol + playerHand.hand.get(playerHand.hand.size() - 1).name + ".", "Hand updated!", JOptionPane.PLAIN_MESSAGE);
                         playStillGoing = false;
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "You cannot double, as you don't have $" + wager * 2 + " to wager!", "Error!", JOptionPane.ERROR_MESSAGE);
                         continue;
                     }
@@ -152,10 +151,6 @@ public class SinglePlayer {
 
             JOptionPane.showMessageDialog(null, "You have $" + money + " left.", "Money updated", JOptionPane.PLAIN_MESSAGE);
 
-            if(money - startingMoney > maxMoneymade){
-                maxMoneymade = money - startingMoney;
-            }
-
             /*****RESET******/
             Hand.clearHand(playerHand);
             Hand.clearHand(Dealer.hand);
@@ -175,16 +170,18 @@ public class SinglePlayer {
             }
         }
 
-        if(maxMoneymade > topEarned && maxMoneymade > 0.0){
+        double moneyMade =  money/startingMoney;
+
+        if (moneyMade > topEarned) {
+            PrintWriter topEarnerWriter = new PrintWriter(topEarnerFile);
             JOptionPane.showMessageDialog(null, "Congratulations " + name + "!\n" +
-                    "You are the Java Arcade's top earner! You earned $" + maxMoneymade + ", beating the old record of $" +topEarned + "!", "New Record!", JOptionPane.PLAIN_MESSAGE);
+                    "You are the Java Arcade's top earner! You ended with " + moneyMade + " times more than you started with, beating the old record of " + topEarned + " times more!", "New Record!", JOptionPane.PLAIN_MESSAGE);
 
             topEarnerWriter.println(name);
-            topEarnerWriter.print(maxMoneymade);
+            topEarnerWriter.print(moneyMade);
+            topEarnerWriter.close();
         }
 
-        topEarnerReader.close();
-        topEarnerWriter.close();
     }
 
 

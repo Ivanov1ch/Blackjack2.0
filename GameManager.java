@@ -12,8 +12,13 @@ public class GameManager {
     public static double getMoney() {
         double money = 0;
 
-        while (!false) {
-            money = Double.parseDouble((String) JOptionPane.showInputDialog(null, "How much money do you have? You must have at least 1 dollar to play.", "Player info", JOptionPane.PLAIN_MESSAGE, null, null, null));
+        while (true) {
+            try {
+                money = Double.parseDouble((String) JOptionPane.showInputDialog(null, "How much money do you have? You must have at least 1 dollar to play.", "Player info", JOptionPane.PLAIN_MESSAGE, null, null, null));
+            } catch (NumberFormatException exception) {
+                JOptionPane.showMessageDialog(null, "Enter a number!", "Error!", JOptionPane.ERROR_MESSAGE);
+                continue;
+            }
 
             String text = Double.toString(Math.abs(money));
             int integerPlaces = text.indexOf('.');
@@ -35,7 +40,7 @@ public class GameManager {
         while (!false) {
             name = (String) JOptionPane.showInputDialog(null, "Welcome to the table, what is your name?", "Player Info", JOptionPane.PLAIN_MESSAGE, null, null, "");
 
-            if (name.length() >= 3) {
+            if (name.trim().length() >= 3) {
                 break;
             }
 
@@ -48,8 +53,12 @@ public class GameManager {
     public static double getWager(double minWager, double maxWager) {
         double wager;
         while (!false) {
-            wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What would you like to wager on this hand?", "Wager", JOptionPane.PLAIN_MESSAGE, null, null, null));
-
+            try {
+                wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What would you like to wager on this hand?", "Wager", JOptionPane.PLAIN_MESSAGE, null, null, null));
+            } catch (NumberFormatException exception) {
+                JOptionPane.showMessageDialog(null, "Enter a number!", "Error!", JOptionPane.ERROR_MESSAGE);
+                continue;
+            }
             String text = Double.toString(Math.abs(wager));
             int integerPlaces = text.indexOf('.');
             int decimalPlaces = text.length() - integerPlaces - 1;
@@ -71,8 +80,12 @@ public class GameManager {
 
         while (true) {
             if (answer == JOptionPane.YES_OPTION) {
-                wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What is your insurance wager?\nYou have $" + money + " left.", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
-
+                try {
+                    wager = Double.parseDouble((String) JOptionPane.showInputDialog(null, "What is your insurance wager?\nYou have $" + money + " left.", "Insurance", JOptionPane.PLAIN_MESSAGE, null, null, null));
+                } catch (NumberFormatException exception) {
+                    JOptionPane.showMessageDialog(null, "Enter a number!", "Error!", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
                 String text = Double.toString(Math.abs(wager));
                 int integerPlaces = text.indexOf('.');
                 int decimalPlaces = text.length() - integerPlaces - 1;
@@ -97,7 +110,7 @@ public class GameManager {
         String[] options = new String[]{"Hit", "Double", "Stand", "Surrender"};
         choice = JOptionPane.showOptionDialog(null, "What would you like to do?", "Your turn!",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, null);
+                null, options, options[0]);
 
         return choice;
     }
